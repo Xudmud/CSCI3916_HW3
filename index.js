@@ -42,7 +42,7 @@ router.route('/users/:userId')
             // return that user
             res.json(user);
         });
-    });
+    })
     .all(function(req, res) {
         console.log(req.body);
         res.status(405).send({success: false, msg: 'Unsupported method.'});
