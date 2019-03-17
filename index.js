@@ -71,6 +71,7 @@ router.post('/signup', function(req, res) {
             if (err) {
                 // duplicate entry
                 if (err.code == 11000)
+                //Send a 409 Conflict code, otherwise it will send 200 OK a la Facebook
                     return res.status(409).send({ success: false, message: 'A user with that username already exists. '});
                 else
                     return res.send(err);
@@ -81,29 +82,32 @@ router.post('/signup', function(req, res) {
     }
 });
 
-router.post('/signin', function(req, res) {
-    var userNew = new User();
-    userNew.name = req.body.name;
-    userNew.username = req.body.username;
-    userNew.password = req.body.password;
+router.route('/signin')
+    .post(function(req, res) {
+        var userNew = new User();
+        userNew.name = req.body.name;
+        userNew.username = req.body.username;
+        userNew.password = req.body.password;
 
-    User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
-        if (err) res.send(err);
+        User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
+            if (err) res.send(err);
 
-        user.comparePassword(userNew.password, function(isMatch){
-            if (isMatch) {
-                var userToken = {id: user._id, username: user.username};
-                var token = jwt.sign(userToken, process.env.SECRET_KEY);
-                res.json({success: true, token: 'JWT ' + token});
-            }
-            else {
-                res.status(401).send({success: false, message: 'Authentication failed.'});
-            }
+            user.comparePassword(userNew.password, function(isMatch){
+                if (isMatch) {
+                    var userToken = {id: user._id, username: user.username};
+                    var token = jwt.sign(userToken, process.env.SECRET_KEY);
+                    res.json({success: true, token: 'JWT ' + token});
+                }
+                else {
+                    res.status(401).send({success: false, message: 'Authentication failed.'});
+                }
+            });
         });
-
-
+    })
+    .all(function(req, res) {
+        console.log(req.body);
+        res.status(405).send({success: false, msg: 'Unsupported method.'});
     });
-});
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
