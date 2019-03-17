@@ -99,7 +99,7 @@ router.route('/signin')
                     res.json({success: true, token: 'JWT ' + token});
                 }
                 else {
-                    res.status(418).send({success: false, message: 'Authentication failed.'});
+                    res.status(401).send({success: false, message: 'Authentication failed.'});
                 }
             });
         });
@@ -120,6 +120,11 @@ router.route('/movies')
     .delete()
 
     .get()
+
+    .all(function(req, res) {
+        console.log(req.body);
+        res.status(405).send({success: false, msg: 'Unsupported method.'});
+    });
 
 
 app.use('/', router);
