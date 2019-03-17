@@ -1,0 +1,22 @@
+{
+  "name": "csci3916_hw3",
+  "version": "1.0.0",
+  "description": "Homework 3 for WebAPI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xudmud/CSCI3916_HW3.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Xudmud/CSCI3916_HW3/issues"
+  },
+  "homepage": "https://github.com/Xudmud/CSCI3916_HW3#readme",
+  "dependencies": {
+    "mongoose": "^5.4.19"
+  }
+}
