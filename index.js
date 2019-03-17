@@ -99,7 +99,7 @@ router.route('/signin')
                     res.json({success: true, token: 'JWT ' + token});
                 }
                 else {
-                    res.status(401).send({success: false, message: 'Authentication failed.'});
+                    res.status(418).send({success: false, message: 'Authentication failed.'});
                 }
             });
         });
@@ -108,6 +108,19 @@ router.route('/signin')
         console.log(req.body);
         res.status(405).send({success: false, msg: 'Unsupported method.'});
     });
+//Should have a method for an auth'd user to delete their entry.
+
+//Movies
+//Required: Title, Year released, Genre, Three actors.
+router.route('/movies')
+    .post()
+
+    .put()
+
+    .delete()
+
+    .get()
+
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
