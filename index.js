@@ -24,8 +24,13 @@ router.route('/postjwt')
                 res = res.type(req.get('Content-Type'));
             }
             res.send(req.body);
-        }
-    );
+    })
+    .all(function(req, res) {
+        //Other methods should return 405 Method Not Allowed
+        console.log(req.body);
+        res.status(405).send({success: false, msg: 'Unsupported method.'});
+    });
+
 
 router.route('/users/:userId')
     .get(authJwtController.isAuthenticated, function (req, res) {
@@ -37,6 +42,10 @@ router.route('/users/:userId')
             // return that user
             res.json(user);
         });
+    });
+    .all(function(req, res) {
+        console.log(req.body);
+        res.status(405).send({success: false, msg: 'Unsupported method.'});
     });
 
 router.route('/users')
