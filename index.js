@@ -121,7 +121,7 @@ router.route('/signin')
 //Required: Title, Year released, Genre, Three actors.
 router.route('/movies')
     //This might be PUT...?
-    .put(authJwtController.isAuthenticated, function (req, res) {
+    .post(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         if(!req.body.title || !req.body.year || req.body.actor.length != 3)
             res.json({success: false, msg: 'Please include all required fields!'});
@@ -142,9 +142,34 @@ router.route('/movies')
         }
     })
 
-    .post(authJwtController.isAuthenticated, function (req, res) {
+    .put(authJwtController.isAuthenticated, function (req, res) {
         //How would you "update" the movie data...
         //Send a valid title, then updated information?
+        Movie.findOne({ title: req.body.title}).select('title year genre actors').exec(function(err, movie) {
+            if(movie === null)
+                return(res.status(404).send({success: false, msg: 'Movie not found.'}));
+            if(req.body.year)
+                movie.year = req.body.year;
+            if(req.body.genre)
+                movie.genre = req.body.genre;
+            if(req.body.actor)
+                if(req.body.actor.length != 3){
+                    return(res.status(412).send({success: false, msg: 'Please use three actors.'}));
+                } else {
+                    movie.actor = req.body.actor;
+                }
+            //Check which fields are present.
+            Movie.update(
+                {title: req.body.title},
+                {
+                    $set: {
+                        "year": movie.year,
+                        "genre": movie.genre,
+                        "actor": movie.actor
+                    }
+                }
+            )
+        })
     })
 
     .delete(authJwtController.isAuthenticated, function (req, res) {
@@ -153,11 +178,12 @@ router.route('/movies')
         //First check if the movie even exists.
         Movie.findOne({ title: req.body.title}).select('title').exec(function(err, movie) {
             if(movie === null)
-                return(res.status(409).send({success: false, msg: 'Movie not found.'}));
+                return(res.status(404).send({success: false, msg: 'Movie not found.'}));
+            //If so, delete it, throw an error if it fails.
             try {
                 Movie.deleteOne({title: req.body.title});
             } catch(e) {
-                res.status(409).send(e);
+                res.status(404).send(e);
             }
             res.json({success: true, msg: 'Successfully deleted movie.'});
         })
