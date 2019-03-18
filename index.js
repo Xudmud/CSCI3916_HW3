@@ -57,30 +57,36 @@ router.route('/users')
         });
     });
 
-router.post('/signup', function(req, res) {
-    if (!req.body.username || !req.body.password) {
-        res.json({success: false, message: 'Please pass username and password.'});
-    }
-    else {
-        var user = new User();
-        user.name = req.body.name;
-        user.username = req.body.username;
-        user.password = req.body.password;
-        // save the user
-        user.save(function(err) {
-            if (err) {
-                // duplicate entry
-                if (err.code == 11000)
-                //Send a 409 Conflict code, otherwise it will send 200 OK a la Facebook
-                    return res.status(409).send({ success: false, message: 'A user with that username already exists. '});
-                else
-                    return res.send(err);
-            }
+router.route('/signup')
+    .post(function(req, res) {
+        if (!req.body.username || !req.body.password) {
+            res.json({success: false, message: 'Please pass username and password.'});
+        }
+        else {
+            var user = new User();
+            user.name = req.body.name;
+            user.username = req.body.username;
+            user.password = req.body.password;
+            // save the user
+            user.save(function(err) {
+                if (err) {
+                    // duplicate entry
+                    if (err.code == 11000)
+                        //Send a 409 Conflict code, otherwise it will send 200 OK a la Facebook
+                        return res.status(409).send({ success: false, message: 'A user with that username already exists. '});
+                    else
+                        return res.send(err);
+                }
 
-            res.json({ success: true, message: 'User created!' });
-        });
-    }
-});
+                res.json({ success: true, message: 'User created!' });
+            });
+        }
+    })
+    .all(function(req,res) {
+        console.log(req.body);
+        res.status(405).send({success: false, msg: 'Unsupported method.'})
+    });
+
 
 router.route('/signin')
     .post(function(req, res) {
@@ -113,13 +119,25 @@ router.route('/signin')
 //Movies
 //Required: Title, Year released, Genre, Three actors.
 router.route('/movies')
-    .post()
+    .post(authJwtController.isAuthenticated, function (req, res) {
+        if(!req.body.title || !req.body.year || req.actors.length() != 3)
+            res.json({success: false, msg: 'Please include all required fields!'});
+        else {
+            res.json({success: true, msg: 'Good.'});
+        }
+    })
 
-    .put()
+    .put(authJwtController.isAuthenticated, function (req, res) {
 
-    .delete()
+    })
 
-    .get()
+    .delete(authJwtController.isAuthenticated, function (req, res) {
+
+    })
+
+    .get(authJwtController.isAuthenticated, function (req, res) {
+
+    })
 
     .all(function(req, res) {
         console.log(req.body);
