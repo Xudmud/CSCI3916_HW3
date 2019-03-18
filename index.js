@@ -120,6 +120,7 @@ router.route('/signin')
 //Movies
 //Required: Title, Year released, Genre, Three actors.
 router.route('/movies')
+    //This might be PUT...?
     .post(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         if(!req.body.title || !req.body.year || req.body.actor.length != 3)
@@ -150,7 +151,10 @@ router.route('/movies')
     })
 
     .get(authJwtController.isAuthenticated, function (req, res) {
-
+        Movie.find(function(err, movies) {
+            if(err) res.send(err);
+            res.json(users);
+        })
     })
 
     .all(function(req, res) {
