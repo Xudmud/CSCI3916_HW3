@@ -15,4 +15,9 @@ var MovieSchema = new Schema({
     actor: {type: String, type: String, required: true}
 });
 
-MovieSchema.pre('save', function(next))
+MovieSchema.pre('save', function(next) {
+    var movie = this;
+
+})
+
+module.exports = mongoose.model('Movie', MovieSchema);

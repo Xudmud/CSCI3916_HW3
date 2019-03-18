@@ -124,7 +124,19 @@ router.route('/movies')
         if(!req.body.title || !req.body.year || req.actors.length() != 3)
             res.json({success: false, msg: 'Please include all required fields!'});
         else {
-            res.json({success: true, msg: 'Good.'});
+            var movieNew = new Movie();
+            movieNew.title = req.body.title;
+            movieNew.year = req.body.year;
+            movieNew.genre = req.body.genre;
+            movieNew.actor = req.body.actors;
+
+            //Not checking for duplicates, might be multiple movies with the same title.
+            movie.save(function(err) {
+                if(err) {
+                    return(res.send(err));
+                }
+                res.json({success: true, msg: 'Successfully created movie!'})
+            });
         }
     })
 
