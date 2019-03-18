@@ -184,9 +184,9 @@ router.route('/movies')
         //Weakness: This will find the first instance and delete that.
         //First check if the movie even exists.
         Movie.findOneAndDelete({ title: req.body.title }).select('title').exec(function(err, movie) {
-            if(movie === null) 
+            if(movie === null) {
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
-            })
+            }
 
             else {
                 res.json({success: true, msg: 'Successfully deleted movie.'1});
