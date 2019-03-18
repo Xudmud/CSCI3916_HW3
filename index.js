@@ -161,6 +161,7 @@ router.route('/movies')
                         movie.actor = req.body.actor;
                     }
                 }
+                var newMov = movie;
             }
         })
 
@@ -170,9 +171,9 @@ router.route('/movies')
             {title: req.body.title},
             {
                 $set: {
-                    "year": movie.year,
-                    "genre": movie.genre,
-                    "actor": movie.actor
+                    "year": newMov.year,
+                    "genre": newMov.genre,
+                    "actor": newMov.actor
                 }, returnNewDocument: true
             }
         )} catch(e) { console.log(e); }
