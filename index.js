@@ -183,13 +183,13 @@ router.route('/movies')
             if(movie === null)
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
             //If so, delete it, throw an error if it fails.
-            try {
-                Movie.deleteOne({title: req.body.title});
-            } catch(e) {
-                res.status(404).send(e);
-            }
-            res.json({success: true, msg: 'Successfully deleted movie.'});
-        })
+        )
+        try {
+            Movie.deleteOne({title: req.body.title});
+        } catch(e) {
+            res.status(404).send(e);
+        }
+        res.json({success: true, msg: 'Successfully deleted movie.'});
     })
 
     .get(authJwtController.isAuthenticated, function (req, res) {
