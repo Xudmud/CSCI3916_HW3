@@ -121,7 +121,7 @@ router.route('/signin')
 //Required: Title, Year released, Genre, Three actors.
 router.route('/movies')
     //This might be PUT...?
-    .post(authJwtController.isAuthenticated, function (req, res) {
+    .put(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
         if(!req.body.title || !req.body.year || req.body.actor.length != 3)
             res.json({success: false, msg: 'Please include all required fields!'});
@@ -142,12 +142,19 @@ router.route('/movies')
         }
     })
 
-    .put(authJwtController.isAuthenticated, function (req, res) {
-
+    .post(authJwtController.isAuthenticated, function (req, res) {
+        //How would you "update" the movie data...
+        //Send a valid title, then updated information?
     })
 
     .delete(authJwtController.isAuthenticated, function (req, res) {
+        //Receives: title to be deleted.
+        //Weakness: This will find the first instance and delete that.
+        Movie.deleteOne({title: req.body.title}, function(err, movie) {
+            if(err) return(res.send(err));
 
+        })
+        res.json({success: true, msg: 'Successfully deleted movie.'});
     })
 
     .get(authJwtController.isAuthenticated, function (req, res) {
