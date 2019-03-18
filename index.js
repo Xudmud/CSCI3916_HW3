@@ -145,7 +145,7 @@ router.route('/movies')
     .put(authJwtController.isAuthenticated, function (req, res, next) {
         //Validate input. Require all four fields.
         if(!req.body || !req.year || !req.genre || !req.actor) {
-            return(next(res.status(400),send({success: false, msg:'Please include all required fields!'})));
+            return(next(res.status(400).send({success: false, msg:'Please include all required fields!'})));
         }
         try {
             Movie.findOneAndUpdate(
