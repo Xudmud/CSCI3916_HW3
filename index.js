@@ -190,11 +190,11 @@ router.route('/movies')
                 console.log(req.body.title);
                 //If so, delete it, throw an error if it fails.
                 try {
-                    Movie.deleteOne( { "title": req.body.title });
+                    var result = await Movie.deleteOne( { "title" : req.body.title });
                 } catch(e) {
                     console.log(e);
                 }
-                res.json({success: true, msg: 'Successfully deleted movie.'});
+                res.json({success: true, msg: 'Successfully deleted movie.', result: result});
             }
         });
 
