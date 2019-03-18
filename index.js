@@ -132,7 +132,7 @@ router.route('/movies')
             movieNew.actor = req.body.actor;
 
             //Not checking for duplicates, might be multiple movies with the same title.
-            movie.save(function(err) {
+            movieNew.save(function(err) {
                 if(err) {
                     return(res.send(err));
                 }
