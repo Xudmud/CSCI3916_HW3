@@ -149,7 +149,7 @@ router.route('/movies')
         }
         try {
             var newMov = Movie.findOneAndUpdate(
-            {title: req.body.title},
+            {"title": req.body.title},
             {
                 $set: {
                     "year": req.body.year,
@@ -157,8 +157,9 @@ router.route('/movies')
                     "actor": req.body.actor
                 }, returnNewDocument: true
             }
+        )
             console.log(newMov);
-        )} catch(e) {
+        } catch(e) {
             console.log(e);
             res.status(400).send({success: false, msg: 'Error occurred', response: e})
         }
