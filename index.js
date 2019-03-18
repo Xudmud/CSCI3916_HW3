@@ -153,6 +153,8 @@ router.route('/movies')
         Movie.deleteOne({title: req.body.title}).select('title').exec(function(err, movie) {
             if(err) return(res.send(err));
         })
+        if(movie === null)
+        return(res.status(409).send({success: false, msg: 'Movie not found.'}));
         res.json({success: true, msg: 'Successfully deleted movie.'});
     })
 
