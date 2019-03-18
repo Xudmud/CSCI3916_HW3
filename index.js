@@ -150,11 +150,11 @@ router.route('/movies')
     .delete(authJwtController.isAuthenticated, function (req, res) {
         //Receives: title to be deleted.
         //Weakness: This will find the first instance and delete that.
-        Movie.deleteOne({title: req.body.title}).select('title').exec(function(err, movie) {
-            if(err) return(res.send(err));
-        })
-        if(movie === null)
-        return(res.status(409).send({success: false, msg: 'Movie not found.'}));
+        try {
+            Movie.deleteOne({title: req.body.title});
+        } catch(e) {
+            res.status(409).send(e);
+        }
         res.json({success: true, msg: 'Successfully deleted movie.'});
     })
 
