@@ -165,7 +165,7 @@ router.route('/movies')
             }
         })
 
-        console.log(movie);
+        console.log(newMov);
         try {
             Movie.findOneAndUpdate(
             {title: req.body.title},
