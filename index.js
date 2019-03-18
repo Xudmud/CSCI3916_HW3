@@ -148,11 +148,13 @@ router.route('/movies')
         Movie.findOne({ title: req.body.title }).select('title year genre actor').exec(function(err, movie) {
             if(movie === null)
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
-
+            console.log("Checking year");
             if(req.body.year)
                 movie.year = req.body.year;
+            console.log("Checking genre");
             if(req.body.genre)
                 movie.genre = req.body.genre;
+            console.log("Checking actor array");
             if(req.body.actor)
                 if(req.body.actor.length != 3){
                     return(res.status(412).send({success: false, msg: 'Please use three actors.'}));
@@ -160,7 +162,7 @@ router.route('/movies')
                     movie.actor = req.body.actor;
                 }
 
-
+            console.log("Movie built, sending to update.");
             Movie.update(
                 {title: req.body.title},
                 {
