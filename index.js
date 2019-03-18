@@ -143,41 +143,24 @@ router.route('/movies')
     })
 
     .put(authJwtController.isAuthenticated, function (req, res) {
-        var searchtitle = req.body.title
-        var newMov = {title: '',year: 0,genre:'',actor:''};
-        //How would you "update" the movie data...
-        //Send a valid title, then updated information?
-        Movie.findOne({ title: searchtitle }).select('title year genre actor').exec(function(err, movie) {
-            if(movie === null) {
-                console.log("No movie found");
-                return(res.status(404).send({success: false, msg: 'Movie not found.'}));
-            }
-            else {
-                if(req.body.year) movie.year = req.body.year;
-                if(req.body.genre) movie.genre = req.body.genre;
-                if(req.body.actor) {
-                    if(req.body.actor.length != 3){
-                        return(res.status(412).send({success: false, msg: 'Please use three actors.'}));
-                    } else {
-                        movie.actor = req.body.actor;
-                    }
-                }
-                newMov = movie;
-            }
-        })
-
-        console.log(newMov);
+        //Validate input. Require all four fields.
+        if(!req.body || !req.year || !req.genre || !req.actor) {
+            return(next(res.status(400),send({success: false, msg:'Please include all required fields!'})));
+        }
         try {
             Movie.findOneAndUpdate(
             {title: req.body.title},
             {
                 $set: {
-                    "year": newMov.year,
-                    "genre": newMov.genre,
-                    "actor": newMov.actor
+                    "year": req.body.year,
+                    "genre": req.body.genre,
+                    "actor": req.body.actor
                 }, returnNewDocument: true
             }
-        )} catch(e) { console.log(e); }
+        )} catch(e) {
+            console.log(e);
+            res.status(400).send({success: false, msg: 'Error occurred', response: e})
+        }
             res.json({success: true, msg: 'Movie updated'});
     })
 
@@ -188,7 +171,7 @@ router.route('/movies')
         //First check if the movie even exists.
         Movie.findOneAndDelete({ title: req.body.title }).select('title').exec(function(err, movie) {
             if(movie === null) {
-                return(res.status(404).send({success: false, msg: 'Movie not found.'}));
+                return(next(res.status(404).send({success: false, msg: 'Movie not found.'})));
             }
 
             else {
