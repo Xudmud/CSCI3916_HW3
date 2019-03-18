@@ -153,7 +153,7 @@ router.route('/movies')
     .get(authJwtController.isAuthenticated, function (req, res) {
         Movie.find(function(err, movies) {
             if(err) res.send(err);
-            res.json(users);
+            res.json(movies);
         })
     })
 
