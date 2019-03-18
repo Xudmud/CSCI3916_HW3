@@ -159,8 +159,7 @@ router.route('/movies')
             {new: true},
             (err, data) => {
                 if(err) return done(err, data);
-                return done(null, data);
-            });    
+            });
             res.json({success: true, msg: 'Movie updated'});
     })
 
