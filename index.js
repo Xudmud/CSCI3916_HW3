@@ -121,6 +121,7 @@ router.route('/signin')
 //Required: Title, Year released, Genre, Three actors.
 router.route('/movies')
     .post(authJwtController.isAuthenticated, function (req, res) {
+        console.log(req.body);
         if(!req.body.title || !req.body.year || req.actors.length() != 3)
             res.json({success: false, msg: 'Please include all required fields!'});
         else {
