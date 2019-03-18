@@ -148,6 +148,7 @@ router.route('/movies')
         //Send a valid title, then updated information?
         Movie.findOne({ title: searchtitle }).select('title year genre actor').exec(function(err, movie) {
             if(movie === null) {
+                console.log("No movie found");
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
             }
             console.log("Checking year");
