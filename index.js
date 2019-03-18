@@ -167,9 +167,9 @@ router.route('/movies')
                 {title: req.body.title},
                 {
                     $set: {
-                        year: movie.year,
-                        genre: movie.genre,
-                        actor: movie.actor
+                        "year": movie.year,
+                        "genre": movie.genre,
+                        "actor": movie.actor
                     }
                 }
             )
@@ -187,7 +187,7 @@ router.route('/movies')
             if(movie === null)
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
             else {
-                console.log(req.body);
+                console.log(req.body.title);
                 //If so, delete it, throw an error if it fails.
                 try {
                     Movie.deleteOne( { "title": req.body.title });
