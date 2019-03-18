@@ -144,7 +144,7 @@ router.route('/movies')
 
     .put(authJwtController.isAuthenticated, function (req, res, next) {
         //Validate input. Require all four fields.
-        if(!req.body || !req.year || !req.genre || !req.actor) {
+        if(!req.body.title || !req.body.year || !req.body.genre || !req.body.actor) {
             return(next(res.status(400).send({success: false, msg:'Please include all required fields!'})));
         }
         try {
