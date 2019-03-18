@@ -189,7 +189,7 @@ router.route('/movies')
             }
 
             else {
-                res.json({success: true, msg: 'Successfully deleted movie.'1});
+                res.json({success: true, msg: 'Successfully deleted movie.'});
             }
         });
 
