@@ -149,7 +149,7 @@ router.route('/movies')
         Movie.findOne({ title: searchtitle }).select('title year genre actor').exec(function(err, movie) {
             if(movie === null) {
                 console.log("No movie found");
-                return(res.status(404).send({success: false, msg: 'Movie not found.'}));
+                return(res.json({success: false, msg: 'Movie not found.'}));
             }
             console.log("Checking year");
             if(req.body.year) movie.year = req.body.year;
