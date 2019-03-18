@@ -191,8 +191,9 @@ router.route('/movies')
         try {
             Movie.deleteOne({ title: req.body.title });
         } catch(e) {
-            res.json({success: true, msg: 'Successfully deleted movie.', response: e});
+            console.log(e);
         }
+        res.json({success: true, msg: 'Successfully deleted movie.'});
     })
 
     .get(authJwtController.isAuthenticated, function (req, res) {
