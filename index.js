@@ -148,6 +148,7 @@ router.route('/movies')
         Movie.findOne({ title: req.body.title}).select('title year genre actors').exec(function(err, movie) {
             if(movie === null)
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
+            console.log(movie);
             if(req.body.year)
                 movie.year = req.body.year;
             if(req.body.genre)
@@ -158,6 +159,7 @@ router.route('/movies')
                 } else {
                     movie.actor = req.body.actor;
                 }
+            console.log(movie);
             //Check which fields are present.
             Movie.update(
                 {title: req.body.title},
