@@ -187,6 +187,7 @@ router.route('/movies')
             if(movie === null)
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
             else {
+                console.log(req.body);
                 //If so, delete it, throw an error if it fails.
                 try {
                     Movie.deleteOne({ title: req.body.title });
