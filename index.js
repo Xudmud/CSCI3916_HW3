@@ -152,11 +152,8 @@ router.route('/movies')
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
             }
             else {
-                console.log("Checking year");
                 if(req.body.year) movie.year = req.body.year;
-                console.log("Checking genre");
                 if(req.body.genre) movie.genre = req.body.genre;
-                console.log("Checking actor array");
                 if(req.body.actor) {
                     if(req.body.actor.length != 3){
                         return(res.status(412).send({success: false, msg: 'Please use three actors.'}));
@@ -165,7 +162,7 @@ router.route('/movies')
                     }
                 }
 
-            console.log("Movie built, sending to update.");
+            console.log(movie);
             Movie.update(
                 {title: req.body.title},
                 {
