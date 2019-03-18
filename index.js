@@ -148,7 +148,7 @@ router.route('/movies')
             return(next(res.status(400).send({success: false, msg:'Please include all required fields!'})));
         }
         try {
-            Movie.findOneAndUpdate(
+            var newMov = Movie.findOneAndUpdate(
             {title: req.body.title},
             {
                 $set: {
@@ -157,6 +157,7 @@ router.route('/movies')
                     "actor": req.body.actor
                 }, returnNewDocument: true
             }
+            console.log(newMov);
         )} catch(e) {
             console.log(e);
             res.status(400).send({success: false, msg: 'Error occurred', response: e})
