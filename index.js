@@ -183,18 +183,12 @@ router.route('/movies')
         //Receives: title to be deleted.
         //Weakness: This will find the first instance and delete that.
         //First check if the movie even exists.
-        Movie.findOne({ title: req.body.title }).select('title').exec(function(err, movie) {
+        Movie.findOneAndDelete({ title: req.body.title }).select('title').exec(function(err, movie) {
             if(movie === null)
                 return(res.status(404).send({success: false, msg: 'Movie not found.'}));
+            }
             else {
-                console.log(req.body.title);
-                //If so, delete it, throw an error if it fails.
-                try {
-                    var result = await Movie.deleteOne( { "title" : req.body.title });
-                } catch(e) {
-                    console.log(e);
-                }
-                res.json({success: true, msg: 'Successfully deleted movie.', result: result});
+                res.json({success: true, msg: 'Successfully deleted movie.'1});
             }
         });
 
