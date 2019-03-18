@@ -163,7 +163,7 @@ router.route('/movies')
                 }
 
             console.log(movie);
-            Movie.findOneAndupdate(
+            Movie.findOneAndUpdate(
                 {title: req.body.title},
                 {
                     $set: {
