@@ -150,6 +150,7 @@ router.route('/movies')
             if(movie === null) {
                 console.log("No movie found");
                 res.json({success: false, msg: 'Movie not found.'});
+                send(res);
             }
             console.log("Checking year");
             if(req.body.year) movie.year = req.body.year;
