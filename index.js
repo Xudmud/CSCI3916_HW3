@@ -143,11 +143,12 @@ router.route('/movies')
     })
 
     .put(authJwtController.isAuthenticated, function (req, res) {
+        var searchtitle = req.body.title
         //How would you "update" the movie data...
         //Send a valid title, then updated information?
-        Movie.findOne({ title: req.body.title }).select('title year genre actor').exec(function(err, movie) {
-            if(movie === null)
-                return(res.status(404).send({success: false, msg: 'Movie not found.'}));
+        Movie.findOne({ title: searchtitle }).select('title year genre actor').exec(function(err, movie) {
+            //if(movie === null)
+                //return(res.status(404).send({success: false, msg: 'Movie not found.'}));
             console.log("Checking year");
             if(req.body.year)
                 movie.year = req.body.year;
