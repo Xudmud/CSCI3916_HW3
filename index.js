@@ -122,14 +122,14 @@ router.route('/signin')
 router.route('/movies')
     .post(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
-        if(!req.body.title || !req.body.year || req.actors.length() != 3)
+        if(!req.body.title || !req.body.year || req.body.actor.length() != 3)
             res.json({success: false, msg: 'Please include all required fields!'});
         else {
             var movieNew = new Movie();
             movieNew.title = req.body.title;
             movieNew.year = req.body.year;
             movieNew.genre = req.body.genre;
-            movieNew.actor = req.body.actors;
+            movieNew.actor = req.body.actor;
 
             //Not checking for duplicates, might be multiple movies with the same title.
             movie.save(function(err) {
