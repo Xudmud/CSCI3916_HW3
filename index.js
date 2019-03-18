@@ -98,7 +98,7 @@ router.route('/signin')
 
         User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
             if (err) res.send(err);
-
+            if(user === null) res.status(401).send({success: false, message: 'Authentication failed.'});
             user.comparePassword(userNew.password, function(isMatch){
                 if (isMatch) {
                     var userToken = {id: user._id, username: user.username};
