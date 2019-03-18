@@ -147,22 +147,20 @@ router.route('/movies')
         if(!req.body.title || !req.body.year || !req.body.genre || !req.body.actor) {
             return(next(res.status(400).send({success: false, msg:'Please include all required fields!'})));
         }
-        try {
-            var newMov = Movie.findOneAndUpdate(
+        Movie.findOneAndUpdate(
             {"title": req.body.title},
             {
                 $set: {
                     "year": req.body.year,
                     "genre": req.body.genre,
                     "actor": req.body.actor
-                }, returnNewDocument: true
-            }
-        )
-            console.log(newMov);
-        } catch(e) {
-            console.log(e);
-            res.status(400).send({success: false, msg: 'Error occurred', response: e})
-        }
+                }
+            },
+            {new: true},
+            (err, data) => {
+                if(err) return done(err, data);
+                return done(null, data);
+            });    
             res.json({success: true, msg: 'Movie updated'});
     })
 
