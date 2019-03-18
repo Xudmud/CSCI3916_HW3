@@ -165,9 +165,9 @@ router.route('/movies')
                 {title: req.body.title},
                 {
                     $set: {
-                        "year": movie.year,
-                        "genre": movie.genre,
-                        "actor": movie.actor
+                        year: movie.year,
+                        genre: movie.genre,
+                        actor: movie.actor
                     }
                 }
             )
