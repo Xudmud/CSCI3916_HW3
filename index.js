@@ -200,7 +200,7 @@ router.route('/movies/:movieId')
     .get(authJwtController.isAuthenticated, function(req, res) {
         //Search for a particular movie.
         var mov = req.params.movie;
-        Movie.findById(mov, function(err, movie))
+        Movie.findById(mov, function(err, movie) {
         if(err) res.send(err);
 
         var movieJson = JSON.stringify(movie);
