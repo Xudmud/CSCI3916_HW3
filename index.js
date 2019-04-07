@@ -147,6 +147,9 @@ router.route('/movies')
         if(!req.body.title || !req.body.year || !req.body.genre || !req.body.actor) {
             return(next(res.status(400).send({success: false, msg:'Please include all required fields!'})));
         }
+        //Double-check length of actor array
+        if(req.body.actor.length < 3)
+            return(next(res.status.400).send({success: false, msg:'Please include at least three actors!'}));
         Movie.findOneAndUpdate(
             {"title": req.body.title},
             {
@@ -193,6 +196,16 @@ router.route('/movies')
         res.status(405).send({success: false, msg: 'Unsupported method.'});
     });
 
+router.route('/movies/:movieId')
+    .get(authJwtController.isAuthenticated, function(req, res) {
+        //Search for a particular movie.
+        var mov = req.params.movie;
+        Movie.findById(mov, function(err, movie))
+        if(err) res.send(err);
+
+        var movieJson = JSON.stringify(movie);
+        res.json(movie);
+    })
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
