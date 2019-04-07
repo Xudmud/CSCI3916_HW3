@@ -149,7 +149,7 @@ router.route('/movies')
         }
         //Double-check length of actor array
         if(req.body.actor.length < 3)
-            return(next(res.status.400).send({success: false, msg:'Please include at least three actors!'}));
+            return(next(res.status(400).send({success: false, msg:'Please include at least three actors!'})));
         Movie.findOneAndUpdate(
             {"title": req.body.title},
             {
