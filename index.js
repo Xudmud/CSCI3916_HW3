@@ -205,6 +205,11 @@ router.route('/movies/:movieId')
 
         var movieJson = JSON.stringify(movie);
         res.json(movie);
+        })
+    })
+    .all(function(req, res) {
+        console.log(req.body);
+        res.status(405).send({success: false, msg: 'Unsupported method.'});
     })
 
 app.use('/', router);
