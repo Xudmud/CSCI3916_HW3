@@ -123,7 +123,7 @@ router.route('/movies')
     //This might be PUT...?
     .post(authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
-        if(!req.body.title || !req.body.year || req.body.actor.length != 3)
+        if(!req.body.title || !req.body.year || req.body.actor.length < 3)
             res.json({success: false, msg: 'Please include all required fields!'});
         else {
             var movieNew = new Movie();
@@ -199,7 +199,7 @@ router.route('/movies')
 router.route('/movies/:movieId')
     .get(authJwtController.isAuthenticated, function(req, res) {
         //Search for a particular movie.
-        var mov = req.params.movie;
+        var mov = req.params.movieId;
         Movie.findById(mov, function(err, movie) {
         if(err) res.send(err);
 
