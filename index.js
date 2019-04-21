@@ -161,12 +161,8 @@ router.route('/movies')
             },
             {new: true},
             (err, data) => {
-<<<<<<< HEAD
                 if(err) res.status(404).send({success: false, msg: 'Movie not found.'});
             });
-=======
-                if(err) { res.status(404).send({success: false, msg: 'Movie not found'}) };
->>>>>>> 9e00baf3d91749425b1dd33061c8a11c7f359c84
             res.json({success: true, msg: 'Movie updated'});
     })
 
