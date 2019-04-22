@@ -165,7 +165,7 @@ router.route('/movies')
             {new: true, passRawResult: true},
             function(err,numAffected,raw) {
                 if(!err) {
-                    console.log(raw);
+                    console.log(res);
                 }
 
             //(err, data) => {
