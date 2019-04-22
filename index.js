@@ -160,6 +160,11 @@ router.route('/movies')
                 }
             },
             {new: true},
+            function(err,numAffected,raw) {
+                if(!err) {
+                    console.log(raw);
+                }
+            }
             (err, data) => {
                 if(err) return(next(res.status(404).send({success: false, msg: 'Movie not found.'})));
             });
