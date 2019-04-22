@@ -160,7 +160,7 @@ router.route('/movies')
                 }
             },
             {new: true},
-            function(err,numAffected,raw) {
+            (err,numAffected,raw) => {
                 if(!err) {
                     console.log(raw);
                 }
