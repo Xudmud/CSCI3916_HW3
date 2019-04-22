@@ -162,7 +162,7 @@ router.route('/movies')
                     "actor": req.body.actor
                 }
             },
-            {new: true},
+            {returnOriginal: false},
             (err,doc) => {
                 if(!err) {
                     console.log(doc);
