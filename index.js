@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 //Apparently FindAndModify is used even though I'm calling FindOneAndUpdate,
 //Set it to not do this.
-mongoose.set('useFindAndModify': false);
+mongoose.set('useFindAndModify', false);
 
 var router = express.Router();
 
