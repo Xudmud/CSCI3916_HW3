@@ -164,24 +164,18 @@ router.route('/movies')
                 }
             },
             {returnOriginal: false, passRawResult: true},
-            function(err, doc, res) {
-                if(res == null) {
-                    suc = false;
-                }
-                else {
-                    suc = true;
-                }
-
-            //(err, data) => {
-            //    if(err) return(next(res.status(404).send({success: false, msg: 'Movie not found.'})));
-            });
-            if(suc === false)
+        ).then(function(r) {
+            if(test.equal(1, r.result.n))
             {
-                res.status(404).send({success: false, msg:'Movie not found'});
-            }
-            else {
                 res.json({success: true, msg: 'Updated movie!'});
             }
+            else {
+                res.status(404).send({success: false, msg:'Movie not found'});
+
+            }
+
+        });
+
     })
 
 
