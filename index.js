@@ -165,7 +165,7 @@ router.route('/movies')
             {returnOriginal: false, passRawResult: true},
             (err,doc, res) => {
                 if(res == null) {
-                    res.status(404).return({success: false, msg: 'Movie not found'});
+                    return(res.status(404).return({success: false, msg: 'Movie not found'}));
                 }
 
             //(err, data) => {
