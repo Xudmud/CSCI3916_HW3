@@ -169,9 +169,9 @@ router.route('/movies')
 
         })
 
-        });
+        })
 
-    })
+    
 
 
     .delete(authJwtController.isAuthenticated, function (req, res) {
