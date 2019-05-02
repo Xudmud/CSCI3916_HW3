@@ -163,15 +163,18 @@ router.route('/movies')
                 }
             },
             {returnOriginal: false, passRawResult: true},
-            (err,doc, res) => {
+            function(err, doc, res) {
                 if(res == null) {
                     return(res.status(404).return({success: false, msg: 'Movie not found'}));
+                }
+                else {
+                    res.json({success: true, msg: 'Movie updated'});
                 }
 
             //(err, data) => {
             //    if(err) return(next(res.status(404).send({success: false, msg: 'Movie not found.'})));
             });
-            res.json({success: true, msg: 'Movie updated'});
+
     })
 
 
