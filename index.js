@@ -162,10 +162,10 @@ router.route('/movies')
                     "actor": req.body.actor
                 }
             },
-            {returnOriginal: false},
-            (err,doc) => {
-                if(!err) {
-                    console.log(doc);
+            {returnOriginal: false, passRawResult: true},
+            (err,doc, res) => {
+                if(res == null) {
+                    res.status(404).return({success: false, msg: 'Movie not found'});
                 }
 
             //(err, data) => {
