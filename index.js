@@ -167,7 +167,7 @@ router.route('/movies')
         ).then(function(r) {
             console.log(r);
 
-            }
+        })
 
         });
 
