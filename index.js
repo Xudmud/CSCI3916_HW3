@@ -165,12 +165,7 @@ router.route('/movies')
             },
             {returnOriginal: false, passRawResult: true},
         ).then(function(r) {
-            if(test.equal(1, r.result.n))
-            {
-                res.json({success: true, msg: 'Updated movie!'});
-            }
-            else {
-                res.status(404).send({success: false, msg:'Movie not found'});
+            console.log(r);
 
             }
 
