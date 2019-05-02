@@ -147,6 +147,7 @@ router.route('/movies')
 
     .put(authJwtController.isAuthenticated, function (req, res, next) {
         //Validate input. Require all four fields.
+        let suc = false;
         if(!req.body.title || !req.body.year || !req.body.genre || !req.body.actor) {
             return(next(res.status(400).send({success: false, msg:'Please include all required fields!'})));
         }
@@ -165,16 +166,22 @@ router.route('/movies')
             {returnOriginal: false, passRawResult: true},
             function(err, doc, res) {
                 if(res == null) {
-                    return(res.status(404).return({success: false, msg: 'Movie not found'}));
+                    suc = false;
                 }
                 else {
-                    res.json({success: true, msg: 'Movie updated'});
+                    suc = true;
                 }
 
             //(err, data) => {
             //    if(err) return(next(res.status(404).send({success: false, msg: 'Movie not found.'})));
             });
-
+            if(suc === false)
+            {
+                res.status(404).send({success: false, msg:'Movie not found'});
+            }
+            else {
+                res.json({success: true, msg: 'Updated movie!'});
+            }
     })
 
 
