@@ -165,13 +165,20 @@ router.route('/movies')
             },
             {returnOriginal: false, passRawResult: true},
         ).then(function(r) {
-            console.log(r);
+            if(r == null)
+            {
+                res.status(404).send({success: false, msg: 'Movie not found.'});
+
+            }
+            else {
+                res.json({success: true, msg: 'Movie updated!'});
+            }
 
         })
 
         })
 
-    
+
 
 
     .delete(authJwtController.isAuthenticated, function (req, res) {
